@@ -1,0 +1,71 @@
+limpeza:
+bundle de pc mais monitor em caso de desktop
+
+transformações:
+1. has_battery
+2. age_years
+3. is_high_ram
+4. is_gaming
+5. is_bundle
+
+
+df.groupby("price_band")["performance_score"].mean()
+
+ANALISE:
+2️⃣ Relacionar has_battery com o tipo de equipamento
+
+Isto já é material bom para análise depois:
+
+pd.crosstab(df["device_type"], df["has_battery"])
+
+
+Se quiseres em percentagem dentro de cada tipo:
+
+pd.crosstab(df["device_type"], df["has_battery"], normalize="index")
+
+
+Isto permite-te dizer coisas tipo:
+
+“Quase 100% dos laptops têm bateria (has_battery = True), enquanto a maioria dos desktops tem has_battery = False…”
+
+
+2. Aproveitar isto logo para uma mini-análise
+
+Mais tarde vais usar isto na parte de “dados agrupados”, mas já te deixo um comando útil:
+
+df.groupby("is_high_ram")["price"].mean()
+
+
+Isto dá-te o preço médio:
+
+dos PCs com muita RAM (True)
+
+vs PCs com menos RAM (False)
+
+Que depois podes comentar em texto:
+
+“Os computadores com pelo menos 16 GB de RAM apresentam, em média, um preço superior, o que é consistente com a ideia de que uma maior capacidade de memória está associada a modelos mais caros.”
+
+
+
+# preço médio gaming vs não gaming
+df.groupby("is_gaming")["price"].mean()
+
+# quantos gaming são desktop vs laptop
+pd.crosstab(df["device_type"], df["is_gaming"])
+
+
+TABELAS:
+
+preco_por_tipo["mean"].plot(kind="bar")
+plt.ylabel("Preço médio")
+plt.title("Preço médio por tipo de equipamento")
+plt.show()
+
+preco_gaming["mean"].plot(kind="bar")
+plt.xticks([0,1], ["Não gaming", "Gaming"], rotation=0)
+plt.ylabel("Preço médio")
+plt.title("Preço médio – gaming vs não gaming")
+plt.show()
+
+
